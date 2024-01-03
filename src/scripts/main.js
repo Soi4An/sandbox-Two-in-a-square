@@ -1,9 +1,7 @@
-
-import { checkLose } from './helpers/checkLose';
 import { createCleanBoard } from './helpers/createCleanBoard';
-import { resetBeforeMove, afterMove } from './helpers/beforeAfterMove';
 import { addNewTile } from './helpers/addNewTile';
-import { makeMoveBy } from './helpers/makeMoveBy';
+import { moveDown, moveLeft, moveRight, moveUp } from './helpers/moves';
+import { handleTouchMove, handleTouchStart } from './helpers/touchHelpers';
 
 export const rows = 4;
 export const cols = 4;
@@ -67,33 +65,24 @@ button.addEventListener('click', () => {
 });
 
 function addEventsKeyboard() {
-  document.addEventListener('keyup', e => {
-    if (e.code === 'ArrowLeft') {
-      resetBeforeMove();
-      makeMoveBy(true, true);
-      afterMove();
-      checkLose();
+  document.addEventListener('keyup', event => {
+    if (event.code === 'ArrowLeft') {
+      moveLeft();
     }
 
-    if (e.code === 'ArrowRight') {
-      resetBeforeMove();
-      makeMoveBy(true, false);
-      afterMove();
-      checkLose();
+    if (event.code === 'ArrowRight') {
+      moveRight();
     }
 
-    if (e.code === 'ArrowDown') {
-      resetBeforeMove();
-      makeMoveBy(false, false);
-      afterMove();
-      checkLose();
+    if (event.code === 'ArrowDown') {
+      moveDown();
     }
 
-    if (e.code === 'ArrowUp') {
-      resetBeforeMove();
-      makeMoveBy(false, true);
-      afterMove();
-      checkLose();
+    if (event.code === 'ArrowUp') {
+      moveUp();
     }
   });
+
+  document.addEventListener('touchstart', handleTouchStart, false);
+  document.addEventListener('touchmove', handleTouchMove, false);
 }

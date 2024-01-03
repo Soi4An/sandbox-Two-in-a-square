@@ -114,5 +114,6 @@ export const makeMoveBy = (
     }
 
     default:
+      console.log('Some problem with counting...');
   }
 };
